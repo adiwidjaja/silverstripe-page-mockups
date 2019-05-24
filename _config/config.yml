@@ -1,0 +1,6 @@
+---
+Name: adiwidjaja/silverstripe-page-mockups
+---
+SilverStripe\Control\Director:
+  rules:
+    'mockups': 'ATW\PageMockups\Controllers\MockupController'
