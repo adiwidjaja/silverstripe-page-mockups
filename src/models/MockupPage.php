@@ -71,9 +71,22 @@ class MockupPage extends ArrayData {
         }
     }
 
+    public function getTemplates($class, $suffix = '') {
+        //Simplified SSViewer::get_templates_by_class
+        $template = $class . $suffix;
+        $templates[] = $template;
+        $templates[] = ['type' => 'Includes', $template];
+
+        // If the class is "PageController" (PSR-2 compatibility) or "Page_Controller" (legacy), look for Page.ss
+        if (preg_match('/^(?<name>.+[^\\\\])_?Controller$/iU', $class, $matches)) {
+            $templates[] = $matches['name'] . $suffix;
+        }
+        return $templates;
+    }
+
 
     public function render() {
-        $templates = SSViewer::get_templates_by_class($this->Type);
+        $templates = $this->getTemplates($this->Type);
         return $this->renderWith($templates);
     }
 
