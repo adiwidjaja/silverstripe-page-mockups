@@ -1,0 +1,14 @@
+{
+    "name": "adiwidjaja/silverstripe-page-mockups",
+    "type": "silverstripe-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Adiwidjaja",
+            "email": "adiwidjaja@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    }
+}
