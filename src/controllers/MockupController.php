@@ -55,7 +55,12 @@ class MockupController extends Controller
     }
 
     public function Menu($level) {
-        return $this->pages;
+        $menu = [];
+        foreach($this->pages as $page) {
+            if(!$page->Hidden)
+                $menu[] = $page;
+        }
+        return new ArrayList($menu);
     }
 
 }
