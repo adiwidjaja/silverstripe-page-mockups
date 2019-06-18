@@ -20,6 +20,7 @@ class MockupController extends Controller
     ];
 
     protected $pages = null;
+    protected $data = null;
 
     protected function loadConfig() {
         $pages_config = $this->config()->get("pages");
@@ -36,6 +37,11 @@ class MockupController extends Controller
         return $this->pages->find('URLSegment', $urlSegment);
     }
 
+    public function Link($action = null)
+    {
+        return $this->data->Link(($action ? $action : true));
+    }
+
     public function index(HTTPRequest $request)
     {
         $this->loadConfig();
@@ -43,14 +49,14 @@ class MockupController extends Controller
         if(!$urlSegment)
             $urlSegment = "home";
 
-        $page = $this->Page($urlSegment);
+        $this->data = $this->Page($urlSegment);
 
-        if(!$page)
+        if(!$this->data)
             return $this->httpError(404);
 
-        $page->LinkOrSection = 'section';
-        $this->setFailover($page);
-        $templates = SSViewer::get_templates_by_class($page->Type);
+        $this->data->LinkOrSection = 'section';
+        $this->setFailover($this->data);
+        $templates = SSViewer::get_templates_by_class($this->data->Type);
         return $this->renderWith($templates);
     }
 
