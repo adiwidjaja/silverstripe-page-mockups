@@ -1,6 +1,7 @@
 <?php
 namespace ATW\PageMockups\Models;
 use Exception;
+use SilverStripe\ORM\ArrayLib;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -16,7 +17,9 @@ class MockupData extends ArrayData {
             $this->Type = "Data";
 
         foreach($value as $name => $value) {
-            if (is_array($value)) {
+            if (ArrayLib::is_associative($value)) {
+                $this->$name = new ArrayData($value);
+            } elseif (is_array($value)) {
                 $list = new ArrayList();
                 foreach($value as $childData) {
                     $child = new MockupData($childData);
