@@ -14,7 +14,8 @@ class MockupPage extends MockupData {
     public function __construct($value = []) {
         parent::__construct($value);
 
-        $this->Type = "Page";
+        if(!$this->Type || $this->Type == "Data")
+            $this->Type = "Page";
     }
 
     public function getMenuTitle()
