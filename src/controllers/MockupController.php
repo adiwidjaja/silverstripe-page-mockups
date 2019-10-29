@@ -56,8 +56,11 @@ class MockupController extends Controller
 
         $this->data->LinkOrSection = 'section';
         $this->setFailover($this->data);
-        $templates = SSViewer::get_templates_by_class($this->data->Type);
-        return $this->renderWith($templates);
+        $templates = [$this->data->Type, "Page", "BasePage"];
+        if($this->data->Action)
+            array_unshift($templates, $this->data->Type."_".$this->data->Action);
+        $template = SSViewer::create($templates);
+        return $template->process($this);
     }
 
     public function Menu($level) {
